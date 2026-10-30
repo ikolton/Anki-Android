@@ -6,6 +6,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import android.widget.GridLayout
 import androidx.core.view.updateLayoutParams
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.databinding.ViewAnswerAreaBinding
@@ -57,5 +58,10 @@ class AnswerAreaView : FrameLayout {
     fun hideHardAndEasyButtons() {
         binding.hardButton.visibility = GONE
         binding.easyButton.visibility = GONE
+        // ink: the grid places children by index, so move good next to again
+        binding.goodButton.updateLayoutParams<GridLayout.LayoutParams> {
+            rowSpec = GridLayout.spec(0)
+            columnSpec = GridLayout.spec(1, 1f)
+        }
     }
 }

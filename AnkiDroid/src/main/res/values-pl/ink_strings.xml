@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ink_cards_left">zostało %d</string>
+    <string name="ink_ease_again">Jeszcze raz</string>
+    <string name="ink_ease_hard">Trudne</string>
+    <string name="ink_ease_good">Dobrze</string>
+    <string name="ink_ease_easy">Łatwe</string>
 </resources>

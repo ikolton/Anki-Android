@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ink_cards_left">%d left</string>
+    <string name="ink_ease_again">@string/ease_button_again</string>
+    <string name="ink_ease_hard">@string/ease_button_hard</string>
+    <string name="ink_ease_good">@string/ease_button_good</string>
+    <string name="ink_ease_easy">@string/ease_button_easy</string>
 </resources>
