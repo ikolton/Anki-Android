@@ -6,15 +6,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import android.widget.TextView
+import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ViewStudyCountsBinding
-import com.ichi2.anki.libanki.sched.Counts
-import com.ichi2.utils.UiUtil
 
 /**
- * Displays New, Learn, and Review counts.
- *
- * @see [Counts]
+ * ink: shows session progress (answered / answered + left) and the number of cards left,
+ * like the owner's desktop theme, instead of the New, Learn and Review counts.
  */
 class StudyCountsView : LinearLayout {
     constructor(context: Context) : this(context, null)
@@ -23,24 +20,22 @@ class StudyCountsView : LinearLayout {
 
     private val binding = ViewStudyCountsBinding.inflate(LayoutInflater.from(context), this)
 
-    fun updateCounts(counts: StudyCounts) {
-        fun TextView.setCount(queue: Counts.Queue) {
-            val newText =
-                when (queue) {
-                    Counts.Queue.NEW -> counts.new
-                    Counts.Queue.LRN -> counts.learn
-                    Counts.Queue.REV -> counts.review
-                }
-            text =
-                if (counts.activeQueue == queue) {
-                    UiUtil.underline(newText)
-                } else {
-                    newText
-                }
-        }
+    // answers are counted per view instance, so a recreated screen starts the bar from zero
+    private var done = 0
+    private var left = 0
 
-        binding.newCount.setCount(Counts.Queue.NEW)
-        binding.learnCount.setCount(Counts.Queue.LRN)
-        binding.reviewCount.setCount(Counts.Queue.REV)
+    fun updateCounts(counts: StudyCounts) {
+        left = counts.total
+        render()
+    }
+
+    fun onAnswered() {
+        done++
+        render()
+    }
+
+    private fun render() {
+        binding.progress.setProgressCompat(inkProgressPercent(done, left), true)
+        binding.left.text = context.getString(R.string.ink_cards_left, left)
     }
 }

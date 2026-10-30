@@ -424,6 +424,9 @@ class ReviewerFragment :
             .collectLatestIn(lifecycleScope) { counts ->
                 binding.studyCounts.updateCounts(counts)
             }
+        viewModel.answerFeedbackFlow.collectIn(lifecycleScope) {
+            binding.studyCounts.onAnswered()
+        }
 
         lifecycleScope.launch {
             if (!CollectionPreferences.getShowRemainingDueCounts()) {

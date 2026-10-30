@@ -27,4 +27,5 @@ data class StudyCounts(
     val new: String get() = newCount.toString()
     val learn: String get() = learnCount.toString()
     val review: String get() = reviewCount.toString()
+    val total: Int get() = newCount + learnCount + reviewCount
 }
