@@ -8,8 +8,9 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/show_answer_button"
         style="@style/Ink.ShowAnswerButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
         android:layout_gravity="center"
         android:text="@string/show_answer" />
 

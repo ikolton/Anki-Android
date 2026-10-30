@@ -8,7 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/deck_layout"
     android:background="?attr/selectableItemBackground"
-    android:paddingVertical="6dp"
+    android:paddingVertical="12dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -49,7 +49,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:textColor="?android:textColorPrimary"
-            android:textSize="18sp"
+            android:textSize="20sp"
             tools:text="Deck name" />
     </LinearLayout>
 
@@ -73,7 +73,7 @@
             android:background="@color/transparent"
             android:gravity="center"
             android:paddingEnd="5dip"
-            android:textSize="14sp"
+            android:textSize="17sp"
             tools:text="10" />
 
         <com.ichi2.ui.FixedTextView
@@ -85,7 +85,7 @@
             android:background="@color/transparent"
             android:gravity="center"
             android:paddingEnd="5dip"
-            android:textSize="14sp"
+            android:textSize="17sp"
             tools:text="42" />
 
         <com.ichi2.ui.FixedTextView
@@ -97,7 +97,7 @@
             android:layout_marginEnd="6dip"
             android:background="@color/transparent"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textSize="17sp"
             tools:text="13" />
     </LinearLayout>
     <!-- ink: hairline under each deck row, as in the desktop deck list -->
