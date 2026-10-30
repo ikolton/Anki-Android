@@ -5,6 +5,7 @@ package com.ichi2.anki.preferences
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.HamcrestUtils
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,6 +14,8 @@ import org.junit.runner.RunWith
 class ControlsSettingsFragmentTest : RobolectricTest() {
     @Test
     fun `XML keys match the Enum keys`() {
+        // ink: the XML lists the legacy reviewer's commands; the fork turns the new study screen on by default
+        Prefs.isNewStudyScreenEnabled = false
         for (screen in ControlPreferenceScreen.entries) {
             val xmlKeys =
                 PreferenceTestUtils.getKeysFromXml(targetContext, screen.xmlRes, excludeCategories = true).toMutableList().apply {
