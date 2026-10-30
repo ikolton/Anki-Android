@@ -48,7 +48,7 @@
                 android:id="@+id/subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/actionBarTextColor"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textAppearance="?attr/textAppearanceListItemSecondary"
                 tools:text="2 cards shown"/>
         </LinearLayout>
