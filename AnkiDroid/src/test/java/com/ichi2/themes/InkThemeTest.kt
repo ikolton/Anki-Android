@@ -6,6 +6,7 @@ import android.content.Intent
 import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -48,6 +49,30 @@ class InkThemeTest : RobolectricTest() {
 
         assertThat(activity.color(android.R.attr.colorBackground), equalTo(0xFFF6F7F9.toInt()))
         assertThat(activity.color(androidx.appcompat.R.attr.colorPrimary), equalTo(0xFFA35F00.toInt()))
+    }
+
+    @Test
+    fun `light theme has dark status and navigation bar icons`() {
+        PrefsRepository(targetContext).apply {
+            appTheme = AppTheme.DAY
+            dayTheme = DayTheme.LIGHT
+        }
+        // StudyOptionsActivity asks for SystemBarStyle.dark, assuming a dark app bar
+        val activity = startStudyOptions()
+        val bars = WindowInsetsControllerCompat(activity.window, activity.window.decorView)
+        assertThat(bars.isAppearanceLightStatusBars, equalTo(true))
+        assertThat(bars.isAppearanceLightNavigationBars, equalTo(true))
+    }
+
+    @Test
+    fun `dark theme has light status bar icons`() {
+        RuntimeEnvironment.setQualifiers("+night")
+        PrefsRepository(targetContext).apply {
+            appTheme = AppTheme.NIGHT
+            nightTheme = NightTheme.DARK
+        }
+        val activity = startStudyOptions()
+        assertThat(WindowInsetsControllerCompat(activity.window, activity.window.decorView).isAppearanceLightStatusBars, equalTo(false))
     }
 
     @Test

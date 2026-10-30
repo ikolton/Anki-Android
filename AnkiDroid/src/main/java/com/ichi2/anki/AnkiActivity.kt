@@ -47,6 +47,7 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -178,6 +179,12 @@ open class AnkiActivity(
 
     override fun onStart() {
         super.onStart()
+        // ink: app bars take the canvas colour, so bar icons follow the theme instead of
+        // the stock assumption of a dark app bar (SystemBarStyle.dark in many screens)
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = !Themes.isNightTheme
+            isAppearanceLightNavigationBars = !Themes.isNightTheme
+        }
         // Disable the notifications bar if running under the test monkey.
         // This is a work-around for an issue with the monkey feature of adb - when the
         // monkey runs on a physical device, it can pull the status bar down, and escape the app
