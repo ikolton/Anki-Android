@@ -46,7 +46,7 @@
             app:useSimpleSummaryProvider="true"
             />
         <ListPreference
-            android:defaultValue="@string/theme_black_value"
+            android:defaultValue="@string/theme_dark_value"
             android:entries="@array/night_theme_labels"
             android:entryValues="@array/night_theme_values"
             android:key="@string/night_theme_key"

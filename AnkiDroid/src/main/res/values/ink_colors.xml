@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ink & saffron tokens, from the owner's desktop theme (anki-theme/tokens.css). -->
+<resources>
+    <color name="ink_dark_canvas">#12161f</color>
+    <color name="ink_dark_surface">#1c2230</color>
+    <color name="ink_dark_line">#262d3d</color>
+    <color name="ink_dark_line_strong">#3a4357</color>
+    <color name="ink_dark_fg">#e9ebf1</color>
+    <color name="ink_dark_muted">#8a93a7</color>
+    <color name="ink_dark_faint">#5d6579</color>
+    <color name="ink_dark_accent">#e9b35f</color>
+    <color name="ink_dark_accent_soft">#1FE9B35F</color>
+    <color name="ink_dark_on_accent">#1a1406</color>
+    <color name="ink_dark_new">#8fb0f2</color>
+    <color name="ink_dark_learn">#ee9a8b</color>
+    <color name="ink_dark_review">#93cfa5</color>
+
+    <color name="ink_light_canvas">#f6f7f9</color>
+    <color name="ink_light_surface">#ffffff</color>
+    <color name="ink_light_line">#e1e4ea</color>
+    <color name="ink_light_line_strong">#c9cfd9</color>
+    <color name="ink_light_fg">#1a2030</color>
+    <color name="ink_light_muted">#667085</color>
+    <color name="ink_light_faint">#a0a7b4</color>
+    <color name="ink_light_accent">#a35f00</color>
+    <color name="ink_light_accent_soft">#1AA35F00</color>
+    <color name="ink_light_on_accent">#ffffff</color>
+    <color name="ink_light_new">#3b6fd8</color>
+    <color name="ink_light_learn">#c4513f</color>
+    <color name="ink_light_review">#2f8a52</color>
+</resources>

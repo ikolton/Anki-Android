@@ -39,6 +39,8 @@ object Themes {
     fun setTheme(context: Context) {
         updateCurrentTheme(context)
         context.setTheme(currentTheme.styleResId)
+        // ink: the owner's desktop palette on top of whichever stock theme is active
+        context.theme.applyStyle(if (isNightTheme) R.style.ThemeOverlay_Ink_Dark else R.style.ThemeOverlay_Ink_Light, true)
     }
 
     /**
