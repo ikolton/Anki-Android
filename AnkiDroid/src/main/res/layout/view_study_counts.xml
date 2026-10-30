@@ -15,7 +15,7 @@
         app:trackThickness="3dp"
         app:trackCornerRadius="3dp"
         app:indicatorColor="?attr/colorPrimary"
-        app:trackColor="?attr/colorOutlineVariant"
+        app:trackColor="?attr/colorOutline"
         app:trackStopIndicatorSize="0dp"
         app:indicatorTrackGapSize="0dp"
         tools:progress="38" />

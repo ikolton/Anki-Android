@@ -8,7 +8,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/deck_layout"
     android:background="?attr/selectableItemBackground"
-    android:paddingVertical="12dp"
+    android:minHeight="60dp"
+    android:foreground="@drawable/ink_deck_row_divider"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -28,6 +29,7 @@
         android:id="@+id/deck_name_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/indent_view"
         android:layout_toStartOf="@+id/counts_layout"
         android:orientation="horizontal"
@@ -49,7 +51,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:textColor="?android:textColorPrimary"
-            android:textSize="20sp"
+            android:textSize="18sp"
             tools:text="Deck name" />
     </LinearLayout>
 
@@ -71,9 +73,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/transparent"
-            android:gravity="center"
+            android:gravity="end"
+            android:minWidth="26dp"
             android:paddingEnd="5dip"
-            android:textSize="17sp"
+            android:fontFeatureSettings="tnum"
+            android:textSize="16sp"
             tools:text="10" />
 
         <com.ichi2.ui.FixedTextView
@@ -83,9 +87,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/transparent"
-            android:gravity="center"
+            android:gravity="end"
+            android:minWidth="26dp"
             android:paddingEnd="5dip"
-            android:textSize="17sp"
+            android:fontFeatureSettings="tnum"
+            android:textSize="16sp"
             tools:text="42" />
 
         <com.ichi2.ui.FixedTextView
@@ -96,14 +102,10 @@
             android:layout_gravity="center"
             android:layout_marginEnd="6dip"
             android:background="@color/transparent"
-            android:gravity="center"
-            android:textSize="17sp"
+            android:gravity="end"
+            android:minWidth="26dp"
+            android:fontFeatureSettings="tnum"
+            android:textSize="16sp"
             tools:text="13" />
     </LinearLayout>
-    <!-- ink: hairline under each deck row, as in the desktop deck list -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="?attr/colorOutlineVariant" />
 </RelativeLayout>

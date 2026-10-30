@@ -169,7 +169,6 @@ import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.shareddeck.SharedDecksActivity
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -490,10 +489,11 @@ open class DeckPicker :
         }
 
         super.onCreate(savedInstanceState)
+        // ink: the light theme has a light app bar, so day themes need dark status bar icons
         enableEdgeToEdge(
             statusBarStyle =
                 SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) {
-                    Themes.currentTheme != DayTheme.EINK
+                    Themes.isNightTheme
                 },
             navigationBarStyle = BottomFadeFrameLayout.navigationBarStyle(),
         )

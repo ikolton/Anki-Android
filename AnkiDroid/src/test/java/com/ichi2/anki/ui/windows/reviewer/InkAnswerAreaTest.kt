@@ -5,6 +5,7 @@ package com.ichi2.anki.ui.windows.reviewer
 import android.content.Context
 import android.view.View
 import android.view.View.MeasureSpec
+import androidx.core.view.marginTop
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.databinding.ViewAnswerAreaBinding
@@ -57,8 +58,14 @@ class InkAnswerAreaTest {
         assertTrue("good is right of again", binding.goodButton.left > binding.againButton.left)
     }
 
-    private fun layOut() {
-        answerArea.setAnswerState(isAnswerShown = true)
+    @Test
+    fun `show answer covers the grid so the thumb stays in one place`() {
+        layOut(answerShown = false)
+        assertEquals(binding.answerButtonsLayout.height - 2 * binding.showAnswerButton.marginTop, binding.showAnswerButton.height)
+    }
+
+    private fun layOut(answerShown: Boolean = true) {
+        answerArea.setAnswerState(isAnswerShown = answerShown)
         answerArea.measure(
             MeasureSpec.makeMeasureSpec(1080, MeasureSpec.EXACTLY),
             MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
