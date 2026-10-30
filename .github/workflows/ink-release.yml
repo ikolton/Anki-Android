@@ -1,0 +1,106 @@
+# Builds signed "AnkiDroid Ink" APKs: the ink branch on top of the newest stable AnkiDroid release.
+# The rebase happens only inside the job (GITHUB_TOKEN may not push upstream workflow changes),
+# so the ink branch stays on its original base and every run rebases it afresh.
+name: Ink release
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Rebuild even if this release already exists"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency: ink-release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ink
+          fetch-depth: 0
+
+      - name: Rebase onto the newest stable release
+        id: base
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch --no-tags https://github.com/ankidroid/Anki-Android.git '+refs/tags/v*:refs/tags/v*'
+          stable=$(git tag -l 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V)
+          latest=$(echo "$stable" | tail -1)
+          base=$(for t in $(echo "$stable" | sort -rV); do git merge-base --is-ancestor "$t" HEAD && echo "$t" && break; done)
+          echo "latest=$latest base=$base"
+          if [ "$latest" != "$base" ] && ! git rebase --onto "$latest" "$base" HEAD; then
+            files=$(git diff --name-only --diff-filter=U)
+            git rebase --abort
+            title="Ink: konflikt przy przejściu na $latest"
+            if [ -z "$(gh issue list --state open --search "\"$title\" in:title" --json number -q '.[].number')" ]; then
+              gh issue create --title "$title" --body "Zmiany z gałęzi ink nie nakładają się czysto na $latest. Pliki w konflikcie:
+          $files
+
+          Poproś Claude'a o przeniesienie gałęzi ink na $latest."
+            fi
+            exit 1
+          fi
+          n=$(git rev-list --count "$latest"..HEAD)
+          [ "$n" -le 99 ] || { echo "too many ink commits for the versionCode offset: $n"; exit 1; }
+          tag="$latest-ink.$n"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            if [ "${{ inputs.force }}" != "true" ]; then echo "$tag already released"; echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+            gh release delete "$tag" --yes --cleanup-tag
+          fi
+          {
+            echo "latest=$latest"
+            echo "n=$n"
+            echo "tag=$tag"
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-java@v4
+        if: steps.base.outputs.skip != 'true'
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - uses: gradle/actions/setup-gradle@v4
+        if: steps.base.outputs.skip != 'true'
+
+      - name: Build signed APKs
+        if: steps.base.outputs.skip != 'true'
+        env:
+          KEYSTOREPWD: ${{ secrets.KEYSTOREPWD }}
+          KEYPWD: ${{ secrets.KEYPWD }}
+          KEYALIAS: ${{ secrets.KEYALIAS }}
+        run: |
+          echo "${{ secrets.KEYSTORE_B64 }}" | base64 -d > "$RUNNER_TEMP/ink.jks"
+          export KEYSTOREPATH="$RUNNER_TEMP/ink.jks"
+          ./gradlew :AnkiDroid:assembleFullRelease -Duniversal-apk=true \
+            -PcustomSuffix=ink -PcustomName="AnkiDroid Ink" -PinkBuild=${{ steps.base.outputs.n }}
+
+      - name: Publish release
+        if: steps.base.outputs.skip != 'true'
+        run: |
+          tag=${{ steps.base.outputs.tag }}
+          latest=${{ steps.base.outputs.latest }}
+          out=AnkiDroid/build/outputs/apk/full/release
+          ls "$out"
+          cp "$out"/*arm64-v8a*.apk "AnkiDroid-Ink-$tag-arm64-v8a.apk"
+          cp "$out"/*universal*.apk "AnkiDroid-Ink-$tag-universal.apk"
+          {
+            echo "AnkiDroid $latest z wyglądem ink & saffron."
+            echo
+            echo "Zmiany względem AnkiDroid:"
+            git log --format='- %s' "$latest"..HEAD
+          } > notes.md
+          gh release create "$tag" --target ink --title "AnkiDroid Ink $tag" --notes-file notes.md \
+            "AnkiDroid-Ink-$tag-arm64-v8a.apk" "AnkiDroid-Ink-$tag-universal.apk"
