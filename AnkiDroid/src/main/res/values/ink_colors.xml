@@ -7,7 +7,6 @@
     <color name="ink_dark_line_strong">#3a4357</color>
     <color name="ink_dark_fg">#e9ebf1</color>
     <color name="ink_dark_muted">#8a93a7</color>
-    <color name="ink_dark_faint">#5d6579</color>
     <color name="ink_dark_zero">#4a5266</color>
     <color name="ink_dark_accent">#e9b35f</color>
     <color name="ink_dark_accent_soft">#1FE9B35F</color>
@@ -22,7 +21,6 @@
     <color name="ink_light_line_strong">#c9cfd9</color>
     <color name="ink_light_fg">#1a2030</color>
     <color name="ink_light_muted">#667085</color>
-    <color name="ink_light_faint">#a0a7b4</color>
     <color name="ink_light_zero">#b8bdc8</color>
     <color name="ink_light_accent">#a35f00</color>
     <color name="ink_light_accent_soft">#1AA35F00</color>

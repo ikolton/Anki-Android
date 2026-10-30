@@ -116,8 +116,6 @@ android {
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
         versionCode=22503300
-        // ink: rebuilds of the same upstream version (-PinkBuild=0..99) must upgrade over each other
-        versionCode += (project.findProperty("inkBuild") ?: "0").toInteger()
         // If you change this to a new version, you probably also want to update .gradle/workflows/milestone.yml for the new version...
         versionName="2.25.3"
         minSdk = libs.versions.minSdk.get().toInteger()
@@ -847,4 +845,12 @@ dependencies {
     testFixturesCompileOnly platform(libs.androidx.compose.bom)
     testFixturesCompileOnly libs.androidx.compose.runtime
 
+}
+
+// ink: release N of the same upstream version (-PinkBuild=1..99) must upgrade over N-1, and the
+// version name shows it. Kept at the end of the file, away from the version lines upstream rewrites.
+if (project.hasProperty("inkBuild")) {
+    def inkBuild = project.property("inkBuild").toInteger()
+    android.defaultConfig.versionCode += inkBuild
+    android.buildTypes.release.versionNameSuffix = "-ink.${inkBuild}"
 }
