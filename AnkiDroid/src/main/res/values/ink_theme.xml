@@ -2,6 +2,7 @@
 <!-- Applied on top of the stock themes by Themes.setTheme, so upstream theme files stay untouched. -->
 <resources>
     <style name="ThemeOverlay.Ink.Dark" parent="">
+        <item name="toolbarStyle">@style/Ink.Toolbar</item>
         <item name="colorPrimary">@color/ink_dark_accent</item>
         <item name="colorOnPrimary">@color/ink_dark_on_accent</item>
         <item name="colorPrimaryDark">@color/ink_dark_canvas</item>
@@ -60,6 +61,7 @@
     </style>
 
     <style name="ThemeOverlay.Ink.Light" parent="">
+        <item name="toolbarStyle">@style/Ink.Toolbar</item>
         <item name="colorPrimary">@color/ink_light_accent</item>
         <item name="colorOnPrimary">@color/ink_light_on_accent</item>
         <item name="colorPrimaryDark">@color/ink_light_canvas</item>
@@ -115,5 +117,16 @@
         <item name="editTextHighlightColor">@color/ink_light_accent_soft</item>
         <item name="dialogBackground">@color/ink_light_surface</item>
         <item name="progressDialogButtonTextColor">@color/ink_light_accent</item>
+    </style>
+
+    <style name="Ink.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="titleTextAppearance">@style/Ink.ToolbarTitle</item>
+    </style>
+
+    <style name="Ink.ToolbarTitle" parent="TextAppearance.Material3.TitleLarge">
+        <!-- Material sets both; AppCompat prefers the app attribute -->
+        <item name="fontFamily">serif</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textSize">22sp</item>
     </style>
 </resources>
