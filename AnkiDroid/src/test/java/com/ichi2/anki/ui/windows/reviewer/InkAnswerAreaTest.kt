@@ -2,7 +2,9 @@
 
 package com.ichi2.anki.ui.windows.reviewer
 
+import android.app.Activity
 import android.content.Context
+import android.os.Looper
 import android.view.View
 import android.view.View.MeasureSpec
 import androidx.core.view.marginTop
@@ -15,6 +17,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 
 /** ink: desktop-style answer buttons, a 2×2 grid with the desktop labels. */
@@ -62,6 +66,22 @@ class InkAnswerAreaTest {
     fun `show answer covers the grid so the thumb stays in one place`() {
         layOut(answerShown = false)
         assertEquals(binding.answerButtonsLayout.height - 2 * binding.showAnswerButton.marginTop, binding.showAnswerButton.height)
+    }
+
+    @Test
+    fun `relative button height enlarges the answer buttons`() {
+        // setRelativeHeight posts to the view, so it needs a window
+        Robolectric
+            .buildActivity(Activity::class.java)
+            .setup()
+            .get()
+            .setContentView(answerArea)
+        layOut()
+        val normal = binding.againButton.height
+        answerArea.setRelativeHeight(150)
+        shadowOf(Looper.getMainLooper()).idle()
+        layOut()
+        assertTrue("again grows from $normal to ${binding.againButton.height}", binding.againButton.height > normal * 1.3)
     }
 
     private fun layOut(answerShown: Boolean = true) {

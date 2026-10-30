@@ -60,7 +60,7 @@ class AnswerAreaView : FrameLayout {
         binding.easyButton.visibility = GONE
         // ink: the grid places children by index, so move good next to again
         binding.goodButton.updateLayoutParams<GridLayout.LayoutParams> {
-            rowSpec = GridLayout.spec(0)
+            rowSpec = GridLayout.spec(0, 1f)
             columnSpec = GridLayout.spec(1, 1f)
         }
     }
